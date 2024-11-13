@@ -49,6 +49,43 @@ sampleID,projectID,sampleType,geneSymbol,coordinates,BAMname
 
 To streamline access and analysis, we have stored the BAM files for all the trios we've examined into a single directory. 
 
+## Analysis 
+
+#### Script execution: 
+
+```
+python3 MosDetection.py bam-readcount referenceSequence MAPQ CSV BAMsDirectory baseAnalysisExtensionValue 
+```
+#### Parameters:
+- **`bam-readcount`**: path to bam-readcount executable file 
+- **`referenceSequence`**: path to reference sequence in fasta format 
+- **`MAPQ`**: minimum mapping quality of reads used for counting
+- **`CSV`**: CSV file with informations about trio identifiers and pedigree along with variant coordinates and bam files name
+- **`BAMsDirectory`**: path to the directory containing all the BAMs to be investigated
+- **`baseAnalysisExtensionValue`**: variant upstream and downstream analysis extension value (for INDEL analysis)
+- **`thresholdValue`**: threshold value to highlight parent alternative allele percentage associated to potential mosaicism
+- **`lowerThresholdValue`**: lower threshold value to highlight proband/parent alternative allele percentage associated to potential mosaicism
+- **`upperThresholdValue`**: upper threshold value to highlight proband/parent alternative allele percentage associated to potential mosaicism
+
+
+For each sample, _bam-readcount_ is executed by providing as parameters: 
+* the hg19 reference genome in the fasta format 
+* MAPQ
+* the BAM file name associated to each individual
+* the genomic coordinate of the variant. 
+
+
+#### Notes:
+Bam-readcount output is reprocessed. For each trio member, general information on genomic coordinates, sequencing depth, and the count of reads for each nucleotide and INDEL are captured. 
+
+In the SNV/DELINS output is present the count and the percentage of abundance for each base type (A, C, G, T, N) at the variant position. In addition, the background noise is calculated to discriminate between false positive and potential cases of mosaicism.
+We defined the background noise as the maximum percentage among bases that were neither reference nor alternative within all trio's members.
+In the specific case of DELINS, we display only the aboundance related to the given position, since we assume is sufficient for mosaicism detection. 
+
+In the INDEL-specific output are present 2 additional columns: the first displayed the count of the identified target INDEL at the given position, while the second the percentage of aboundance of the target INDEL. The deletion analysis sheet displays the counts in a column marked “DEL:-deletion”. Similarly, for insertions, the data appears under “INS:+insertion”. 
+
+The four different Excel sheets are generated only when all variants type are available in the CSV file. 
+
 
 
 
