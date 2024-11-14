@@ -1,11 +1,13 @@
 # Mosaic-Variants-Project
 
 ## Introduction 
-MosDetection is a python script implemented to rapidly detect **potential mosaicism**, distinguishing inherited heterozygosity from de novo variants, based on read depth count and percentage of each nucleotide at a specific variant position.
+MosDetection is a python script implemented to rapidly detect **potential mosaicism in trios**, distinguishing inherited heterozygosity from de novo variants, based on read depth count and percentage of each nucleotide at a specific variant position.
 
 We utilized [bam-readcount](https://github.com/genome/bam-readcount?tab=readme-ov-file) v1.0.1 to determine the count of each nucleotide in each variant position.
 
-The script execution produces an Excel file composed of four sheets, dedicated to the analysis of SNVs, deletions, insertions, and DelIns being explored, respectively. 
+The purpose of the implemented script is to reprocess the output from [bam-readcount](https://github.com/genome/bam-readcount?tab=readme-ov-file), retaining only the relevant count data. Additionally, it incorporates supplementary information, including pedigree details, unique identifiers, and the gene symbol associated with each variant. This approach allows for faster detection, saving time compared to manual count analysis in IGV.
+
+The script execution produces an Excel file composed of four sheets, dedicated to the analysis of **SNVs**, **deletions**, **insertions**, and **delins** being explored, respectively. 
 
 ## Dependencies
 
