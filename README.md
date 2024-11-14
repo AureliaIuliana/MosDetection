@@ -5,7 +5,7 @@ MosDetection is a python script implemented to rapidly detect **potential mosaic
 
 We utilized [bam-readcount](https://github.com/genome/bam-readcount?tab=readme-ov-file) v1.0.1 to determine the count of each nucleotide in each variant position.
 
-The purpose of the implemented script is to reprocess the output from [bam-readcount](https://github.com/genome/bam-readcount?tab=readme-ov-file), retaining only the relevant count data. Additionally, it incorporates supplementary information, including pedigree details, unique identifiers, and the gene symbol associated with each variant. This approach allows for faster detection, saving time compared to manual count analysis in IGV.
+The purpose of the implemented script is to reprocess the output from [bam-readcount](https://github.com/genome/bam-readcount?tab=readme-ov-file), retaining only the relevant count data. Additionally, it incorporates supplementary information, including pedigree details, unique identifiers, and the gene symbol associated with each variant. This approach allows for faster detection, saving time compared to manual count detection in IGV.
 
 The script execution produces an Excel file composed of four sheets, dedicated to the analysis of **SNVs**, **deletions**, **insertions**, and **delins** being explored, respectively. 
 
@@ -13,13 +13,12 @@ The script execution produces an Excel file composed of four sheets, dedicated t
 
 bam-readcount [installation](https://github.com/genome/bam-readcount?tab=readme-ov-file)
 ```
-  Python  3.7.8
   openpyxl 3.0.9
   pandas 1.4.3
 ```
 
 ## Input
-The input data comprises **BAM** files of the trios being studied, along with a **CSV** file that details the trio identifiers and pedigree, along with the coordinates of the variants. 
+The input data comprises **BAM** files of the trios being studied, a **CSV** file that details the trio identifiers and pedigree, along with the coordinates of the variants. 
 
 This is the ordered content of the CSV file: 
 
@@ -56,25 +55,29 @@ To streamline access and analysis, we have stored the BAM files for all the trio
 #### Script execution: 
 
 ```
-python3 MosDetection.py bam-readcount referenceSequence MAPQ CSV BAMsDirectory baseAnalysisExtensionValue 
+python3 MosDetection.py bam-readcount referenceSequence MAPQvalue CSV BAMsDirectory baseAnalysisExtensionValue lowerThresholdValue upperThresholdValue
 ```
 #### Parameters:
 - **`bam-readcount`**: path to bam-readcount executable file 
 - **`referenceSequence`**: path to reference sequence in fasta format 
-- **`MAPQ`**: minimum mapping quality of reads used for counting
+- **`MAPQvalue`**: minimum mapping quality of reads used for counting
 - **`CSV`**: CSV file with informations about trio identifiers and pedigree along with variant coordinates and bam files name
 - **`BAMsDirectory`**: path to the directory containing all the BAMs to be investigated
 - **`baseAnalysisExtensionValue`**: variant upstream and downstream analysis extension value (for INDEL analysis)
-- **`thresholdValue`**: threshold value to highlight parent alternative allele percentage associated to potential mosaicism
 - **`lowerThresholdValue`**: lower threshold value to highlight proband/parent alternative allele percentage associated to potential mosaicism
 - **`upperThresholdValue`**: upper threshold value to highlight proband/parent alternative allele percentage associated to potential mosaicism
 
-
 For each sample, _bam-readcount_ is executed by providing as parameters: 
-* the hg19 reference genome in the fasta format 
-* MAPQ
-* the BAM file name associated to each individual
-* the genomic coordinate of the variant. 
+- **`referenceSequence`**: path to reference sequence in fasta format 
+- **`MAPQvalue`**: minimum mapping quality of reads used for counting
+- **`BAMfile`**: the BAM file name associated to each individual
+- **`genomic`** the genomic coordinate of the variant
+
+  bam-readcount -f hg19_simple_no_chr.fasta allbams/OPTI01_recal.bam 12:52200885-52200885 2>/dev/null
+  
+```
+bam-readcount -f referenceSequence -q MAPQvalue
+```
 
 
 #### Notes:
