@@ -5,7 +5,7 @@ MosDetection is a python script implemented to rapidly detect **potential mosaic
 
 We utilized [bam-readcount](https://github.com/genome/bam-readcount?tab=readme-ov-file) v1.0.1 to determine the count of each nucleotide in each variant position.
 
-The purpose of the implemented script is to reprocess the output from [bam-readcount](https://github.com/genome/bam-readcount?tab=readme-ov-file), retaining only the relevant count data. Additionally, it incorporates supplementary information, including pedigree details, unique identifiers, and the gene symbol associated with each variant. This approach allows for faster detection, saving time compared to manual count detection in IGV.
+The implemented script reprocess [bam-readcount](https://github.com/genome/bam-readcount?tab=readme-ov-file) output, retaining only the depth, ref and alt alleles count data. Additionally, it incorporates supplementary information, including pedigree details, unique identifiers, and the gene symbol associated with each variant. This approach allows for faster detection, saving time compared to manual count check in IGV.
 
 The script execution produces an Excel file composed of four sheets, dedicated to the analysis of **SNVs**, **deletions**, **insertions**, and **delins** being explored, respectively. 
 
@@ -56,7 +56,7 @@ To streamline access and analysis, BAM files are stored into a single directory.
 
 ```
 python3 MosDetection.py bam-readcount referenceSequence MAPQvalue CSV BAMsDirectory baseAnalysisExtensionValue lowerThresholdValue upperThresholdValue
-```
+```                                         
 #### Parameters:
 - **`bam-readcount`**: path to bam-readcount executable file 
 - **`referenceSequence`**: path to reference sequence in fasta format 
@@ -77,30 +77,40 @@ Each BAM file is analyzed with _bam-readcount_ providing as parameters:
 bam-readcount -f referenceSequence -q MAPQvalue BAMfile genomicCoordinate
 ```
 
-#### Notes:
-Bam-readcount output is reprocessed. For each trio member, general information on genomic coordinates, sequencing depth, and the count of reads for each nucleotide are captured. 
+## Output
 
-In the SNV/DELINS output is present the count and the percentage of abundance for each base type (A, C, G, T, N) at the variant position. In addition, the background noise is calculated to discriminate between false positive and potential cases of mosaicism.
-We defined the background noise as the maximum percentage among bases that were neither reference nor alternative within all trio's members.
+The SNV/DELINS-specific output includes the count and percentage abundance of each base type (A, C, G, T, N) at the variant position.
 In the specific case of DELINS, we display only the aboundance related to the given position, since we assume is sufficient for mosaicism detection. 
+In addition, the background noise is calculated to discriminate between false positive and potential cases of mosaicism. We defined the background noise as the maximum percentage among bases that were neither reference nor alternative within all trio's members.
 
-In the INDEL-specific output are present 2 additional columns: the first displayed the count of the identified target INDEL at the given position, while the second the percentage of aboundance of the target INDEL. The deletion analysis sheet displays the counts in a column marked “DEL:-deletion”. Similarly, for insertions, the data appears under “INS:+insertion”. 
+In the INDEL-specific output are present 2 additional columns: the first displays the count of the identified target INDEL at the given position, while the second its aboundance percentage. The deletion analysis sheet displays the counts in a column marked “DEL:-deletion”. Similarly, for insertions, the data appears under “INS:+insertion”.
 
 The four different Excel sheets are generated only when all variants type are available in the CSV file. 
-At the following link you can find an output example 
+At the following link you can find an example: [MosDetectionOutput](https://github.com/AureliaIuliana/MosDetection/blob/main/outputExample.xlsx) 
+
+The parameters `lowerThresholdValue` and `upperThresholdValue` highlight in red all variant percentages that fall between the lower and upper thresholds, establishing the bounds for mosaicism. 
+Reference allele percentages (greater than the calculated trio background noise) and variant percentages outside the above thresholds are highlighted in yellow.
+In the INDEL analysis sheet, the position of the INDEL variant is highlithed in order to differentiate between upstream and downstream positions.
+
+#### Example
+We set `lowerThresholdValue=1`,`upperThresholdValue=40` and `baseAnalysisExtensionValue=1`. 
+
+##### _SNV_ _analysis_
+
+It is possible to detect 3 SNV mosaicisms: two proband mosaicisms (projectID p703 and Pr1) and a father mosiacism (projectID p736).
+The analysis of project p736 suggests that G/A is a inherited heterozygosity, distinguishing it from _de_ _novo_ variant.
+<img width="1251" alt="image" src="https://github.com/user-attachments/assets/1664cfae-49bd-4077-b37f-3edd58f24a01">
+
+##### _INDEL_ _analysis_
+
+`baseAnalysisExtensionValue` parameter permits to inpect variant flanking regions. As anticipated, the position of the INDEL variant is highlighted to distinguished it from upstream and downstream positions, facilitating data visualization. The percentage of A-base-insertion associated to the mother is not yellow-highlithed since is lesser than background noise, while the percentage of A-base-insertion of the proband is highlighted and indicates that 48,6 % of the total reads count contains the analyzed insertion. 
+![image](https://github.com/user-attachments/assets/94f53af2-3abe-454a-9a02-f8a150006d26)
+
+In this deletion example is possibile to visualize that 57% of the reads are reference at the given position, while 42,7% are alternative. 26061 reads cointains the analyzed deletion. 
+Since is a 9-base-deletion, and `baseAnalysisExtensionValue=1` we are able to  visualize 1-base upstream and 9-base downstream the given variant position.  
+![image](https://github.com/user-attachments/assets/a6e07fb1-b797-44e8-9ea9-f0e88b03cab9)
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-## To collocate
-MosDetection requires specific user-provided parameters. The first one defines a threshold value to highlight parent's alternative allele percentage in SNV analysis. The second parameter serves to extend by a value the INDEL upstream and downstream base analysis to investigate depth sequencing distribution flanking variant location.
