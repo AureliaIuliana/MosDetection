@@ -1,4 +1,4 @@
-# Mosaic-Variants-Project
+# MosDetection
 
 ## Introduction 
 MosDetection is a python script implemented to rapidly detect **potential mosaicism in trios**, distinguishing inherited heterozygosity from de novo variants, based on read depth count and percentage of each nucleotide at a specific variant position.
@@ -48,7 +48,7 @@ sampleID,projectID,sampleType,geneSymbol,coordinates,BAMname
 20N0351,p714,M,COL4A1,13:110826811:CCTG/GCAC,OPTI143
 ```
 
-To streamline access and analysis, we have stored the BAM files for all the trios we've examined into a single directory. 
+To streamline access and analysis, BAM files are stored into a single directory. 
 
 ## Analysis 
 
