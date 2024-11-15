@@ -67,21 +67,18 @@ python3 MosDetection.py bam-readcount referenceSequence MAPQvalue CSV BAMsDirect
 - **`lowerThresholdValue`**: lower threshold value to highlight proband/parent alternative allele percentage associated to potential mosaicism
 - **`upperThresholdValue`**: upper threshold value to highlight proband/parent alternative allele percentage associated to potential mosaicism
 
-For each sample, _bam-readcount_ is executed by providing as parameters: 
+Each BAM file is analyzed with _bam-readcount_ providing as parameters: 
 - **`referenceSequence`**: path to reference sequence in fasta format 
 - **`MAPQvalue`**: minimum mapping quality of reads used for counting
 - **`BAMfile`**: the BAM file name associated to each individual
-- **`genomic`** the genomic coordinate of the variant
-
-  bam-readcount -f hg19_simple_no_chr.fasta allbams/OPTI01_recal.bam 12:52200885-52200885 2>/dev/null
+- **`genomicCoordinate`** the genomic coordinate of the variant
   
 ```
-bam-readcount -f referenceSequence -q MAPQvalue
+bam-readcount -f referenceSequence -q MAPQvalue BAMfile genomicCoordinate
 ```
 
-
 #### Notes:
-Bam-readcount output is reprocessed. For each trio member, general information on genomic coordinates, sequencing depth, and the count of reads for each nucleotide and INDEL are captured. 
+Bam-readcount output is reprocessed. For each trio member, general information on genomic coordinates, sequencing depth, and the count of reads for each nucleotide are captured. 
 
 In the SNV/DELINS output is present the count and the percentage of abundance for each base type (A, C, G, T, N) at the variant position. In addition, the background noise is calculated to discriminate between false positive and potential cases of mosaicism.
 We defined the background noise as the maximum percentage among bases that were neither reference nor alternative within all trio's members.
@@ -90,6 +87,7 @@ In the specific case of DELINS, we display only the aboundance related to the gi
 In the INDEL-specific output are present 2 additional columns: the first displayed the count of the identified target INDEL at the given position, while the second the percentage of aboundance of the target INDEL. The deletion analysis sheet displays the counts in a column marked “DEL:-deletion”. Similarly, for insertions, the data appears under “INS:+insertion”. 
 
 The four different Excel sheets are generated only when all variants type are available in the CSV file. 
+At the following link you can find an output example 
 
 
 
