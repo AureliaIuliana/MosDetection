@@ -31,7 +31,7 @@ This is the ordered content of the CSV file:
 | coordinates | genomic coordinates pinpointing the location of the variant along with the reference and alternative alleles |
 | BAMname| BAM name of the trio member |
 
-CSV example for SNV, deletion, insertion, and delins respectively: 
+CSV example for a SNV, a deletion, a insertion, and a delins respectively: 
 ```
 sampleID,projectID,sampleType,geneSymbol,coordinates,BAMname
 2076R,p649,I,DYNC1H1,14:102461022:T/C,OPTI111
