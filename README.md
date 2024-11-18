@@ -68,14 +68,14 @@ python3 MosDetection.py bam-readcount referenceSequence MAPQvalue CSV BAMsDirect
 - **`upperThresholdValue`**: upper threshold value to highlight proband/parent alternative allele percentage associated to potential mosaicism
 
 Each BAM file is analyzed with _bam-readcount_ providing as parameters: 
+```
+bam-readcount -f referenceSequence -q MAPQvalue BAMfile genomicCoordinate
+```
 - **`referenceSequence`**: path to reference sequence in fasta format 
 - **`MAPQvalue`**: minimum mapping quality of reads used for counting
 - **`BAMfile`**: the BAM file name associated to each individual
 - **`genomicCoordinate`** the genomic coordinate of the variant
   
-```
-bam-readcount -f referenceSequence -q MAPQvalue BAMfile genomicCoordinate
-```
 
 ## Output
 
