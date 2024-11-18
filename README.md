@@ -24,12 +24,12 @@ This is the ordered content of the CSV file:
 
 | Column | Description |
 | ------| -----------|
-| sampleID   | unique ID associated to each member of the family trio. |
-| projectID | unique ID which associated each sample to a specific trio research project. |
-| sampleType    | "I" for proband, "F" for father, "M" for mother. |
-| geneSymbol | symbol of the gene where the variant is detected. |
-| coordinates | genomic coordinates pinpointing the location of the variant along with the reference and alternative alleles. |
-| BAMname| BAM name of the trio member. |
+| sampleID   | unique ID associated to each member of the family trio |
+| projectID | unique ID which associated each sample to a specific trio research project |
+| sampleType    | "I" for proband, "F" for father, "M" for mother |
+| geneSymbol | symbol of the gene where the variant is detected |
+| coordinates | genomic coordinates pinpointing the location of the variant along with the reference and alternative alleles |
+| BAMname| BAM name of the trio member |
 
 CSV example for SNV, deletion, insertion, and delins respectively: 
 ```
