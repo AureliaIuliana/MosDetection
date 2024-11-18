@@ -97,7 +97,7 @@ We set `lowerThresholdValue=1`,`upperThresholdValue=40` and `baseAnalysisExtensi
 
 ##### _SNV_ _analysis_
 
-It is possible to detect 3 SNV mosaicisms: two proband mosaicisms (projectID p703 and Pr1) and a father mosiacism (projectID p736).
+In the following example it is possible to detect 3 SNV mosaicisms: two proband mosaicisms (projectID p703 and Pr1) and a father mosiacism (projectID p736).
 The analysis of project p736 suggests that G/A is a inherited heterozygosity, distinguishing it from _de_ _novo_ variant.
 <img width="1251" alt="image" src="https://github.com/user-attachments/assets/1664cfae-49bd-4077-b37f-3edd58f24a01">
 
